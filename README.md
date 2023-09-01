@@ -25,7 +25,7 @@ A to lock on to default position
 —Added Player 3 and 4 to the game
 —Added separate  input devices for both Player 3 and 4
 —Created a ‘state’ to be able to switch between inGame modes and Menu modes easily
-—Uploaded the build to GitHub public ally with the version name/v0.1.0
+—Uploaded the build to GitHub public with the version name/v0.1.0
 
 Author/Liam Allen
 Socials/
