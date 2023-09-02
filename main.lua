@@ -58,6 +58,11 @@ Ball1Y = WINDOW_HEIGHT / 2
 BH = 12
 BW = 12 
 
+P1GamePad = false
+P2GamePad = false
+P3GamePad = false 
+P4GamePad = false
+
 BatSpeed = 200
 BallSpeed = 600
 
@@ -316,48 +321,76 @@ function love.update(dt)
                     end
                 end
                 
-            --Player2's movement system 
-                if love.keyboard.isDown("up") then
-                    B2Y = B2Y - (BatSpeed * dt)
-                    lockOnUp = false
-                else
-                    lockOnUp = true 
+            --Player2's movement system
+                if not joystick then return
+                     if love.keyboard.isDown("up") then
+                         B2Y = B2Y - (BatSpeed * dt)
+                         lockOnUp = false
+                     else
+                         lockOnUp = true 
+                     end
+         
+                     if love.keyboard.isDown("down") then
+                         B2Y = B2Y + (BatSpeed * dt)
+                         lockOnDown = false
+                     else
+                         lockOnDown = true 
+                     end
+         
+                     if love.keyboard.isDown("left") then
+                         B2X = B2X - (BatSpeed * dt)
+                         lockOnLeft = false
+                     else
+                         lockOnLeft = true 
+                     end
+         
+                     if love.keyboard.isDown("right") then
+                         B2X = B2X + (BatSpeed * dt)
+                         lockOnRight = false
+                     else
+                         lockOnRight = true 
+                     end
+                     
+                     if love.keyboard.isDown("rshift") then
+                         rshiftDown = true
+                     else 
+                         rshiftDown = false 
+                     end
+         
+                     if lockOnUp == true and lockOnDown== true and rshiftDown == false then
+                         B2Y = 200 
+                     end
+         
+                     if lockOnLeft == true and lockOnRight == true and rshiftDown == false then
+                     B2X = 1100 
+                     end
                 end
+
+                if joystick ~= nil then
+				-- getGamepadAxis returns a value between -1 and 1.
+                    -- It returns 0 when it is at rest
+                    
+                    Direction1 = joystick2:getGamepadAxis("leftx")
+                    Direction2 = joystick2:getGamepadAxis("lefty")
     
-                if love.keyboard.isDown("down") then
-                    B2Y = B2Y + (BatSpeed * dt)
-                    lockOnDown = false
-                else
-                    lockOnDown = true 
-                end
+                    B2X =  ((BatSpeed + 100)*dt) * P2Direction1 + B3X
+                    B2Y =  ((BatSpeed +100)*dt) * P2Direction2 + B3Y
     
-                if love.keyboard.isDown("left") then
-                    B2X = B2X - (BatSpeed * dt)
-                    lockOnLeft = false
-                else
-                    lockOnLeft = true 
-                end
-    
-                if love.keyboard.isDown("right") then
-                    B2X = B2X + (BatSpeed * dt)
-                    lockOnRight = false
-                else
-                    lockOnRight = true 
-                end
-                
-                if love.keyboard.isDown("rshift") then
-                    rshiftDown = true
-                else 
-                    rshiftDown = false 
-                end
-    
-                if lockOnUp == true and lockOnDown== true and rshiftDown == false then
-                    B2Y = 200 
-                end
-    
-                if lockOnLeft == true and lockOnRight == true and rshiftDown == false then
-                B2X = 1100 
-                end
+                    if joystick2:isGamepadDown("a") then
+                        P2aDown = true
+                    else 
+                        P2aDown = false 
+                    end
+            
+                    if P2aDown == true then
+                        B2Y = 565
+                    end
+            
+                    if P2aDown == true then
+                    B2X = 200
+                    end
+			end
+				
                 --All the collides for Player2's bat 
                 if B2Y > 197 then
                     B2Y = 200
